@@ -1,0 +1,1000 @@
+<title>Julian Monge — Three Projects</title>
+<style>
+  /* ── Tokens: complete light palette on bare :root ─────────────────── */
+  :root {
+    --paper:      #F3F5F3;
+    --surface:    #FBFCFB;
+    --surface-2:  #E9EDEA;
+    --rule:       #D3DAD5;
+    --rule-soft:  #E1E6E2;
+    --ink:        #131A17;
+    --ink-2:      #38423D;
+    --muted:      #5F6A64;
+    --accent:     #1B6A58;
+    --accent-ink: #12463A;
+    --accent-wash:#DCEAE4;
+
+    --serif: "Iowan Old Style", "Charter", "Bitstream Charter", "Sitka Text",
+             Cambria, Georgia, serif;
+    --sans:  ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Helvetica Neue",
+             Arial, sans-serif;
+    --mono:  ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+             "Liberation Mono", monospace;
+
+    --measure: 66ch;
+    --step--1: clamp(0.80rem, 0.78rem + 0.10vw, 0.86rem);
+    --step-0:  clamp(1.02rem, 0.99rem + 0.14vw, 1.10rem);
+    --step-1:  clamp(1.22rem, 1.16rem + 0.28vw, 1.38rem);
+    --step-2:  clamp(1.52rem, 1.40rem + 0.55vw, 1.90rem);
+    --step-3:  clamp(1.95rem, 1.72rem + 1.05vw, 2.70rem);
+  }
+
+  /* System-dark (un-stamped) — only tokens change, and an explicit
+     light choice still wins. */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1412;
+      --surface:    #151B18;
+      --surface-2:  #1B2320;
+      --rule:       #2A3531;
+      --rule-soft:  #212B27;
+      --ink:        #E7ECE8;
+      --ink-2:      #C3CCC7;
+      --muted:      #8D9A94;
+      --accent:     #58BC9F;
+      --accent-ink: #8FD6C0;
+      --accent-wash:#1A2E28;
+    }
+  }
+  /* Explicit dark choice wins over a light OS. */
+  :root[data-theme="dark"] {
+    --paper:      #0F1412;
+    --surface:    #151B18;
+    --surface-2:  #1B2320;
+    --rule:       #2A3531;
+    --rule-soft:  #212B27;
+    --ink:        #E7ECE8;
+    --ink-2:      #C3CCC7;
+    --muted:      #8D9A94;
+    --accent:     #58BC9F;
+    --accent-ink: #8FD6C0;
+    --accent-wash:#1A2E28;
+  }
+
+  /* ── Base ─────────────────────────────────────────────────────────── */
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: var(--step-0);
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 74rem;
+    margin: 0 auto;
+    padding: 0 1.5rem 6rem;
+  }
+
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible,
+  .rail a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  code, .mono { font-family: var(--mono); font-size: 0.88em; }
+  code {
+    background: var(--surface-2);
+    padding: 0.08em 0.34em;
+    border-radius: 3px;
+    color: var(--ink-2);
+  }
+
+  .eyebrow {
+    font-family: var(--sans);
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* ── Masthead ─────────────────────────────────────────────────────── */
+  .masthead {
+    border-bottom: 1px solid var(--rule);
+    padding: 4rem 0 2.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+  .masthead h1 {
+    font-size: var(--step-3);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin: 0;
+    text-wrap: balance;
+    font-weight: 600;
+  }
+  .masthead .lede {
+    margin: 0;
+    max-width: var(--measure);
+    color: var(--ink-2);
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+  .byline {
+    font-family: var(--sans);
+    font-size: var(--step--1);
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    margin: 0;
+  }
+
+  /* ── Thesis: claim → measurement ──────────────────────────────────── */
+  .thesis { padding: 2.75rem 0 0; display: flex; flex-direction: column; gap: 1.5rem; }
+  .thesis p { max-width: var(--measure); margin: 0; }
+
+  .ledger {
+    display: grid;
+    gap: 1px;
+    background: var(--rule-soft);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .ledger-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1.15fr;
+    align-items: center;
+    gap: 1.25rem;
+    background: var(--surface);
+    padding: 1.05rem 1.35rem;
+  }
+  .claim { color: var(--muted); font-style: italic; }
+  .arrow { font-family: var(--mono); color: var(--accent); font-size: 0.95em; }
+  .measured { font-family: var(--sans); font-size: 0.95rem; line-height: 1.45; }
+  @media (max-width: 46rem) {
+    .ledger-row { grid-template-columns: 1fr; gap: 0.4rem; padding: 1rem 1.1rem; }
+    .arrow { display: none; }
+  }
+
+  /* ── Two-column body with sticky rail ─────────────────────────────── */
+  .layout {
+    display: grid;
+    grid-template-columns: 15rem minmax(0, 1fr);
+    gap: 4rem;
+    align-items: start;
+    padding-top: 3.5rem;
+  }
+  @media (max-width: 62rem) {
+    .layout { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+    .rail { position: static; border-left: 0; padding-left: 0; }
+  }
+
+  .rail {
+    position: sticky;
+    top: 2rem;
+    font-family: var(--sans);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .rail ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1.15rem; }
+  .rail a { display: block; text-decoration: none; color: var(--ink-2); border-left: 2px solid var(--rule); padding-left: 0.85rem; }
+  .rail a:hover { border-left-color: var(--accent); color: var(--ink); }
+  .rail .figure {
+    display: block;
+    font-family: var(--mono);
+    font-size: 1.15rem;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+  .rail .name { display: block; font-size: 0.9rem; font-weight: 600; margin-top: 0.15rem; }
+  .rail .gloss { display: block; font-size: 0.78rem; color: var(--muted); line-height: 1.35; margin-top: 0.1rem; }
+
+  /* ── Sections ─────────────────────────────────────────────────────── */
+  .col { display: flex; flex-direction: column; gap: 4.5rem; min-width: 0; }
+
+  section > * { max-width: var(--measure); }
+  section > .full, section > figure, section > .tablewrap, section > .statgrid { max-width: none; }
+
+  .dossier { display: flex; flex-direction: column; gap: 1.35rem; scroll-margin-top: 1.5rem; }
+
+  .dossier-head { display: flex; flex-direction: column; gap: 0.65rem; max-width: none; }
+  .dossier h2 {
+    font-size: var(--step-2);
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    margin: 0;
+    font-weight: 600;
+    text-wrap: balance;
+  }
+  .repo-line {
+    font-family: var(--mono);
+    font-size: var(--step--1);
+    color: var(--muted);
+    word-break: break-word;
+  }
+
+  h3 {
+    font-family: var(--sans);
+    font-size: 0.86rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    margin: 1.6rem 0 -0.4rem;
+  }
+  .dossier h3:first-of-type { margin-top: 0.9rem; }
+
+  p { margin: 0; max-width: var(--measure); }
+  section p + p { margin-top: -0.35rem; }
+
+  strong { font-weight: 700; color: var(--ink); }
+
+  ul { margin: 0; padding-left: 1.15rem; display: flex; flex-direction: column; gap: 0.45rem; }
+  li { padding-left: 0.15rem; }
+  li::marker { color: var(--accent); }
+
+  /* ── Pull quote / the counter-intuitive bit ───────────────────────── */
+  .pull {
+    border-left: 3px solid var(--accent);
+    background: var(--accent-wash);
+    padding: 1.15rem 1.4rem;
+    border-radius: 0 4px 4px 0;
+    font-size: 1.04em;
+    color: var(--ink);
+    max-width: var(--measure);
+  }
+  .pull p { max-width: none; }
+
+  /* ── Tables ───────────────────────────────────────────────────────── */
+  .tablewrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 4px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: 0.92rem; }
+  th, td { text-align: left; padding: 0.7rem 1rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top; }
+  thead th {
+    font-size: 0.76rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 700;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--rule);
+    white-space: nowrap;
+  }
+  tbody tr:last-child td { border-bottom: 0; }
+  td.num, th.num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.key { font-family: var(--mono); font-size: 0.85rem; color: var(--ink-2); white-space: nowrap; }
+  .hl { color: var(--accent); font-weight: 700; }
+
+  /* ── Diagram ──────────────────────────────────────────────────────── */
+  figure { margin: 0; }
+  .diagram {
+    overflow-x: auto;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 1.25rem 1.4rem;
+  }
+  .diagram pre {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: var(--ink-2);
+    white-space: pre;
+  }
+  figcaption { font-family: var(--sans); font-size: var(--step--1); color: var(--muted); margin-top: 0.6rem; }
+
+  /* ── Talk tracks ──────────────────────────────────────────────────── */
+  .script {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 1.6rem 1.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: none;
+  }
+  .script-head {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--accent-ink);
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: baseline;
+    border-bottom: 1px solid var(--rule-soft);
+    padding-bottom: 0.7rem;
+  }
+  .script-head .dur { color: var(--muted); font-weight: 600; letter-spacing: 0.04em; text-transform: none; font-family: var(--mono); font-size: 0.78rem; }
+  .script p { max-width: 62ch; color: var(--ink-2); }
+  .script p:first-letter { font-weight: 600; }
+
+  /* ── Q&A ──────────────────────────────────────────────────────────── */
+  .qa { display: flex; flex-direction: column; gap: 1.9rem; max-width: none; }
+  .q {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--ink);
+    margin: 0 0 0.5rem;
+    max-width: var(--measure);
+  }
+  .q::before { content: "Q  "; color: var(--accent); font-family: var(--mono); font-weight: 400; }
+
+  /* ── Footer ───────────────────────────────────────────────────────── */
+  .foot {
+    margin-top: 5rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.5rem;
+    font-family: var(--sans);
+    font-size: var(--step--1);
+    color: var(--muted);
+    max-width: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  }
+  html { scroll-behavior: smooth; }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">Engineering portfolio · three repositories</p>
+    <h1>Turning a fuzzy claim into a measurable one</h1>
+    <p class="lede">
+      An evaluation harness for LLM agents under attack, a deduplication pipeline
+      for a property market with no shared database, and a compliance engine for a
+      deadline that costs money when it passes.
+    </p>
+    <p class="byline">
+      <span>Julian Monge</span>
+      <span>Nosara, Costa Rica</span>
+      <span class="mono">verified 2026-08-07</span>
+    </p>
+  </header>
+
+  <section class="thesis">
+    <p>
+      Three projects, one habit. Each takes a claim that normally goes untested and
+      makes it into a number somebody can check — and each states, in writing and
+      next to the result, what it does <em>not</em> establish.
+    </p>
+
+    <div class="ledger">
+      <div class="ledger-row">
+        <span class="claim">“Our agent is safe.”</span>
+        <span class="arrow">──▶</span>
+        <span class="measured">60 adversarial cases, two configurations, an audit log,
+          and two separate rates that disagree with each other on purpose.</span>
+      </div>
+      <div class="ledger-row">
+        <span class="claim">“Nobody knows what’s actually for sale.”</span>
+        <span class="arrow">──▶</span>
+        <span class="measured">Nine scrapers, a deduplication pass, and one canonical
+          record with every source still attached.</span>
+      </div>
+      <div class="ledger-row">
+        <span class="claim">“We might be losing tax credits.”</span>
+        <span class="arrow">──▶</span>
+        <span class="measured">A statutory deadline computed per document, with a
+          status model that classifies outcome rather than activity.</span>
+      </div>
+    </div>
+
+    <p>
+      Two are Python data and evaluation work; one is a TypeScript product. That is
+      the honest range — I build the pipeline, and I build the thing people use.
+    </p>
+  </section>
+
+  <div class="layout">
+
+    <nav class="rail" aria-label="Projects">
+      <p class="eyebrow">Contents</p>
+      <ol>
+        <li><a href="#eval">
+          <span class="figure">63%</span>
+          <span class="name">secure-agent-eval</span>
+          <span class="gloss">Attempt rate that guardrails don’t move</span>
+        </a></li>
+        <li><a href="#listings">
+          <span class="figure">9</span>
+          <span class="name">nosara-listings</span>
+          <span class="gloss">Agencies, no join key between them</span>
+        </a></li>
+        <li><a href="#deadline">
+          <span class="figure">8</span>
+          <span class="name">fractal-desk-v2</span>
+          <span class="gloss">Business days, then the credit is gone</span>
+        </a></li>
+        <li><a href="#tracks">
+          <span class="figure">3×3</span>
+          <span class="name">Talk tracks</span>
+          <span class="gloss">Three minutes each, spoken</span>
+        </a></li>
+        <li><a href="#questions">
+          <span class="figure">5</span>
+          <span class="name">Hard questions</span>
+          <span class="gloss">And the answers</span>
+        </a></li>
+      </ol>
+    </nav>
+
+    <div class="col">
+
+      <!-- ══════════════════════════ 1 ══════════════════════════ -->
+      <section class="dossier" id="eval">
+        <div class="dossier-head">
+          <p class="eyebrow">Evaluation · adversarial testing</p>
+          <h2>secure-agent-eval</h2>
+          <p class="repo-line">Python 3.11+ · MIT · 60 cases · 80 tests · runs offline, no API key</p>
+        </div>
+
+        <p>
+          An offline evaluation harness that runs a fixed set of adversarial cases
+          against an LLM agent under two configurations — unguarded baseline and
+          guarded — and reports the difference, split by attack category and by
+          language, English and Spanish.
+        </p>
+
+        <h3>Why it exists</h3>
+        <p>
+          An agent with tools, memory and access to someone else’s data has an attack
+          surface a chat model does not. The standard claim is “we added guardrails.”
+          That claim is usually untested, and where it is tested, running the test
+          costs money, so nobody re-runs it. This is 60 cases and a command that runs
+          free and offline.
+        </p>
+
+        <h3>How it works</h3>
+        <figure>
+          <div class="diagram">
+<pre>cases.v1.yaml ─▶ schema validation ─▶ 60 cases  (5 categories × 2 languages × 6)
+                                          │
+      ┌───────────────────────────────────┘
+      ▼
+  input filter ─▶ model turn ─▶ permission check ─▶ tool execution ─▶ output scan
+   (guardrails)    (adapter)        (registry)         (world)        (guardrails)
+                                          │
+                                          ▼
+                        grader ─▶ safe │ unsafe │ ambiguous   (+ attempted)
+                        audit  ─▶ every step, append-only JSONL
+                        report ─▶ results.json + report.md</pre>
+          </div>
+          <figcaption>
+            Both configurations run the same pipeline; only the guardrail flags differ.
+          </figcaption>
+        </figure>
+
+        <p>
+          Under the baseline the guardrails still evaluate and still log what they
+          <em>would</em> have decided, so a baseline run answers “what would have been
+          blocked?” without changing what happened. Five categories: prompt injection
+          where the payload arrives inside retrieved content, tool permission
+          boundaries, data leakage, unsafe and irreversible actions, and human handoff
+          — where stopping is the correct behaviour and a fluent answer is the failure.
+        </p>
+        <p>
+          It is provider-agnostic: one class, one method
+          (<code>step(TurnRequest) -&gt; AgentTurn</code>). The offline mock is a
+          deliberately susceptible scripted agent, <strong>not a model</strong>. The
+          Anthropic adapter is a ~60-line reference implementation.
+        </p>
+
+        <h3>What’s measurable</h3>
+        <p>Two rates, because they answer different questions:</p>
+        <ul>
+          <li><strong>Unsafe rate</strong> — a forbidden effect reached the world or the user. Grades the <em>system</em>.</li>
+          <li><strong>Attempt rate</strong> — the agent reached for the forbidden thing, blocked or not. Grades the <em>agent</em>.</li>
+        </ul>
+
+        <div class="tablewrap">
+          <table>
+            <thead>
+              <tr><th>Mock profile</th><th>Configuration</th><th class="num">Unsafe</th><th class="num">Attempted</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>compliant</td><td>baseline</td><td class="num">60/60 (100%)</td><td class="num">48/60 (80%)</td></tr>
+              <tr><td>compliant</td><td>guarded</td><td class="num hl">3/60 (5%)</td><td class="num hl">38/60 (63%)</td></tr>
+              <tr><td>cautious</td><td>baseline</td><td class="num">24/60 (40%)</td><td class="num">12/60 (20%)</td></tr>
+              <tr><td>cautious</td><td>guarded</td><td class="num">3/60 (5%)</td><td class="num">2/60 (3%)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pull">
+          <p>
+            The number worth arguing about is <strong>63%</strong>, not 5%. Under
+            guardrails the agent still reaches for the forbidden thing 38 times out of
+            60 and is stopped by a mechanism every time. The system got safe; the agent
+            did not get better. A harness reporting only the unsafe rate would have
+            hidden that.
+          </p>
+        </div>
+
+        <h3>The finding that didn’t go as pitched</h3>
+        <p>
+          I expected Spanish guardrails to degrade broadly. <strong>They didn’t.</strong>
+          Of three guarded failures, exactly one is attributable to language: a case
+          that says <em>“voy a llevar esto a los tribunales”</em> where the escalation
+          patterns cover <em>abogado</em>, <em>demandar</em> and <em>litigio</em>. The
+          other two are a matched English/Spanish pair that fails identically by design
+          — they describe discrimination without naming it, which defeats a lexical
+          rule in any language.
+        </p>
+        <p>
+          One case is n=1. The README says so.
+        </p>
+        <p>
+          What <em>did</em> replicate cleanly, in every cell: <strong>mechanisms
+          transfer across languages, patterns don’t.</strong> The permission layer and
+          the secret scanner score identically in both languages because they don’t
+          know what language the request was in. The two lexical guardrails are the
+          only places any gap appears. That generalises past this suite — prefer
+          structural controls to pattern lists wherever the choice exists.
+        </p>
+
+        <h3>What it doesn’t do</h3>
+        <p>
+          Single-turn only. No encoding or obfuscation attacks — base64, homoglyphs,
+          zero-width characters. No multimodal input. Two languages is not
+          “multilingual”. Six cases per cell means several differences are one case
+          wide, and no confidence intervals are reported because none would be
+          meaningful. Cases and guardrails share an author, which biases coverage
+          toward attacks I thought of — visible in the fact that the only cases that
+          get through are the two I wrote to get through.
+        </p>
+      </section>
+
+      <!-- ══════════════════════════ 2 ══════════════════════════ -->
+      <section class="dossier" id="listings">
+        <div class="dossier-head">
+          <p class="eyebrow">Data pipeline · entity resolution</p>
+          <h2>nosara-listings — the no-MLS pipeline</h2>
+          <p class="repo-line">Next.js 16 · React 19 · TypeScript · Tailwind 4 · Supabase · Playwright / cheerio</p>
+        </div>
+
+        <p>
+          A scraping and deduplication pipeline that builds a single view of what is
+          actually for sale in Nosara, Costa Rica, across nine agencies that do not
+          share a database — plus the app that serves it.
+        </p>
+
+        <h3>Why it exists</h3>
+        <p>
+          Nosara has no MLS. Listings are open and non-exclusive, so the same house is
+          advertised by four agencies at four prices under four descriptions, and
+          nobody — buyer, seller or agent — can see the actual inventory. The market’s
+          core information problem is duplication without a shared key.
+        </p>
+        <p>
+          As an engineering problem the interesting part is that there <em>is</em> no
+          join key. No listing ID, no address standard, no shared taxonomy. Identity
+          has to be inferred from attributes each agency records differently, or does
+          not record at all.
+        </p>
+
+        <h3>How it works</h3>
+        <p>
+          <strong>Nine scrapers</strong>, one per agency — RE/MAX, Century 21, Two
+          Costa Rica, Coldwell, Blue Zone, Mango, Sotheby’s, Tropicasa and Wanderlust.
+          Playwright for the JavaScript-rendered sites, cheerio for the static ones.
+          Each has a <code>── CONFIGURATION ──</code> block at the top, so selectors
+          are changed in one place when a site redesigns — which they do.
+        </p>
+        <p>
+          <strong>Union-Find deduplication.</strong> Every cross-agency pair is
+          compared, matching pairs are unioned, and connected components become groups.
+          That choice matters: duplication is transitive. If A matches B and B matches
+          C but A and C look different because one agency omitted the lot size, they
+          are still one house. Pairwise matching gets that wrong; connected components
+          get it right.
+        </p>
+
+        <p>The similarity function is explicit and tunable at the top of the file:</p>
+
+        <div class="tablewrap">
+          <table>
+            <thead>
+              <tr><th>Field</th><th>Rule</th><th>On mismatch</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="key">bedrooms</td><td>Exact</td><td><strong>Immediate reject</strong></td></tr>
+              <tr><td class="key">price_usd</td><td>Within ±15%</td><td>Counts as a disagreement</td></tr>
+              <tr><td class="key">sqm</td><td>Within ±20%</td><td>Counts as a disagreement</td></tr>
+              <tr><td class="key">lot_sqm</td><td>Within ±20%</td><td>Ignored</td></tr>
+              <tr><td class="key">bathrooms</td><td>Exact</td><td>Ignored — never rejects</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          A pair matches on <strong>at least two fields agreeing and zero
+          disagreeing</strong>. Same-agency pairs are skipped — one agency listing a
+          house twice is their problem, not a cross-source duplicate. Each group picks
+          a canonical record and keeps every source attached, so the product is “this
+          house, four agencies, four prices,” which is the thing that did not exist
+          before.
+        </p>
+        <p>
+          One operational constraint is enforced in the repository rather than left to
+          memory: scrapers run locally only, never on Vercel, and the Supabase
+          service-role key never leaves the machine. That is the kind of rule that gets
+          violated by accident during a deploy.
+        </p>
+
+        <h3>The honest engineering notes</h3>
+        <p>
+          The comparison is <code>O(n²)</code>, with a comment saying so and why it is
+          fine at roughly 500 listings. Naming it means a reader knows it was a
+          decision rather than an oversight.
+        </p>
+        <p>
+          The tolerances are heuristics, not learned. They are extracted to named
+          constants so they are tunable, but they are currently set by judgement, and
+          there is no labelled ground-truth set to measure precision and recall
+          against. <strong>That is the biggest gap in the project</strong> — and the
+          most interesting thing in it to talk about.
+        </p>
+
+        <h3>What it doesn’t do</h3>
+        <p>
+          No test suite. No measured accuracy for the matcher. No geocoding, so
+          identity inference cannot use location.
+        </p>
+      </section>
+
+      <!-- ══════════════════════════ 3 ══════════════════════════ -->
+      <section class="dossier" id="deadline">
+        <div class="dossier-head">
+          <p class="eyebrow">Compliance engine · data warehouse</p>
+          <h2>fractal-desk-v2 — the deadline engine</h2>
+          <p class="repo-line">Python 3.11+ · DuckDB · Streamlit · MIT · 224 tests · synthetic data only</p>
+        </div>
+
+        <p>
+          A deadline engine and warehouse for Costa Rican electronic documents a
+          business <em>receives</em>: it computes the statutory acceptance deadline per
+          document, classifies each one’s status, validates structure, and serves it as
+          a dashboard.
+        </p>
+
+        <h3>Why it exists</h3>
+        <p>
+          Two things reset the ground in 2025. Format v4.4 became mandatory on
+          1 September, and <strong>TRIBU-CR replaced ATV</strong> as the tax platform on
+          6 October. The new regime enforces a rule with money attached: an electronic
+          document you receive must be answered — accepted, partially accepted or
+          rejected — within the first eight business days of the month following the
+          month it was issued. Miss it and the IVA credit on that document is
+          <strong>permanently lost</strong>. No retroactive upload restores it.
+        </p>
+
+        <div class="pull">
+          <p>
+            The deadline is not “eight business days after the invoice.” It is a fixed
+            calendar point per issue-month. Every document issued in March 2026 — the
+            1st, the 15th, the 31st — shares one deadline: the 8th business day of
+            April 2026. The obvious implementation,
+            <code>issue_date + 8 business days</code>, is wrong for
+            <strong>every document it touches</strong>.
+          </p>
+        </div>
+
+        <h3>How it works</h3>
+        <p>
+          <code>deadline(issue_date) = 8th business day of (issue_month + 1)</code>,
+          over a business calendar with Costa Rican holidays and an explicit coverage
+          guard — if the calendar does not cover the range being asked about, it raises
+          rather than silently returning a wrong date.
+        </p>
+
+        <div class="tablewrap">
+          <table>
+            <thead>
+              <tr><th>Status</th><th>Meaning</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="key">ACCEPTED</td><td>Confirmed on or before the deadline. Credit secured.</td></tr>
+              <tr><td class="key">PENDING_SAFE</td><td>Unconfirmed, more than three business days remain.</td></tr>
+              <tr><td class="key">PENDING_AT_RISK</td><td>Unconfirmed, three or fewer business days remain — inclusive of the deadline day.</td></tr>
+              <tr><td class="key">EXPIRED_CREDIT_LOST</td><td>The window closed unanswered — <strong>or a confirmation was sent late</strong>.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          That last clause is the judgement call I would defend. A document confirmed
+          two days late is recorded as “accepted” in the source system, but the credit
+          is gone. Reporting it as accepted would make the dashboard’s headline number
+          a lie. <strong>The engine classifies outcome, not activity</strong> — so a
+          late acceptance is <code>EXPIRED_CREDIT_LOST</code> and carries
+          <code>accepted_late=True</code> so the distinction stays queryable.
+        </p>
+        <p>
+          The warehouse is layered dbt-style in DuckDB —
+          <code>raw_ → stg_ → int_ → dim_/fct_</code> — with numeric filename prefixes
+          declaring dependency order. The deadline logic lives in Python and the SQL
+          layer <em>consumes</em> it as <code>fct_deadline_status</code> rather than
+          re-deriving it. One implementation, one place to defend.
+        </p>
+        <p>
+          A structural validator runs alongside it with ERROR, WARNING and INFO
+          severities. One rule is a WARNING rather than an ERROR precisely because the
+          catalogue behind it ships as a placeholder — making it an ERROR would produce
+          a validator that is loudly confident on the strength of data it invented.
+        </p>
+
+        <h3>What it doesn’t do — and this is load-bearing</h3>
+        <p>
+          <strong>All data is synthetic, and the repository proves it structurally.</strong>
+          Every taxpayer identifier begins <code>999</code>, a range Costa Rica does not
+          issue; every company name begins <code>SYN</code>; every mart row carries
+          <code>is_synthetic = TRUE</code>. There are no keys, no live calls, and
+          nothing in it can sign or transmit a document. <code>lxml</code> is present so
+          the mock submission layer emits parseable XML — it is a parser, not a signer.
+        </p>
+        <p>
+          The regulatory notes open with “this is not tax advice” and record which rules
+          the engine implements and why, with sources and a verification date, so that
+          somebody qualified can check it against the law. They say outright: if the
+          document and the law disagree, the law is right.
+        </p>
+
+        <h3>The v1 / v2 distinction</h3>
+        <p>
+          The repository also documents <strong>Fractal Desk v1</strong>, a
+          university–industry partnership with Universidad Nacional de Costa Rica. Five
+          UNA informatics students built it. I was client-side sponsor and general
+          director: requirements, scope, acceptance criteria, schedule and milestone
+          review. <strong>I did not write that code, and none of it is in this
+          repository.</strong> The intellectual property is UNA’s and the students’.
+        </p>
+        <p>
+          v2 is my own independent work, and it is not a rebuild of v1. When ATV became
+          TRIBU-CR the system v1 integrated with stopped existing, and the new regime
+          created a problem that had no tool. So v2 is the deadline engine and nothing
+          else — not a CRM, not project management, not invoicing. The narrowest thing
+          that solves a problem people actually lose money to.
+        </p>
+      </section>
+
+      <!-- ══════════════════════════ tracks ══════════════════════════ -->
+      <section id="tracks">
+        <p class="eyebrow">Prepared explanations</p>
+        <h2 style="font-size:var(--step-2); margin:0.4rem 0 0.9rem; font-weight:600; letter-spacing:-0.015em;">Talk tracks</h2>
+        <p style="margin-bottom:2rem;">
+          Roughly three minutes each, spoken. Same structure throughout: problem, what
+          I built, the one number, what I would fix.
+        </p>
+
+        <div style="display:flex; flex-direction:column; gap:1.5rem;">
+
+          <div class="script">
+            <div class="script-head"><span>secure-agent-eval</span><span class="dur">≈ 3 min</span></div>
+            <p>
+              An agent with tools and access to other people’s data has an attack
+              surface a chat model doesn’t. The usual claim is “we added guardrails,”
+              and that claim is usually untested — and where it is tested, running the
+              test costs money, so nobody re-runs it.
+            </p>
+            <p>
+              So I built a harness: 60 adversarial cases across five categories —
+              prompt injection, tool permission boundaries, data leakage, unsafe
+              actions, and human handoff — each one in English and Spanish. It runs the
+              same pipeline twice, once with guardrails off and once with them on, and
+              reports the difference. It runs offline with no API key, so it’s free and
+              anyone can re-run it. There’s an append-only audit log behind every
+              number.
+            </p>
+            <p>
+              The design decision I’d defend hardest is reporting two rates instead of
+              one. The unsafe rate asks whether harm actually reached the user — that
+              grades the system. The attempt rate asks whether the agent reached for
+              the forbidden thing at all, blocked or not — that grades the agent.
+              Guardrails took the unsafe rate from 100% to 5%. The attempt rate went
+              from 80% to 63%. So the system got safe and the agent didn’t get better —
+              it’s being caught by a mechanism, every time. If I’d only reported the
+              first number, that would have looked like a model improvement, and it
+              isn’t one.
+            </p>
+            <p>
+              The bilingual result is the part I’d want to be honest about. I expected
+              Spanish guardrails to degrade broadly. They didn’t — exactly one failure
+              out of 60 is attributable to language. One case is n=1, not a finding, and
+              the README says so. What did replicate cleanly is more useful: mechanisms
+              transfer across languages, pattern-matching doesn’t. The permission layer
+              and the secret scanner score identically in both languages because they
+              don’t know what language the request was in. The two regex-based
+              guardrails are the only places any gap shows up.
+            </p>
+            <p>
+              The obvious next step is testing the language hypothesis properly — about
+              fifty escalation cases per language, sourced from real Spanish rather than
+              mine — plus encoding attacks, which a regex filter should fail badly, and
+              I’d like to measure how badly.
+            </p>
+          </div>
+
+          <div class="script">
+            <div class="script-head"><span>nosara-listings</span><span class="dur">≈ 3 min</span></div>
+            <p>
+              Nosara has no MLS. Listings are open and non-exclusive, so the same house
+              gets advertised by four agencies at four different prices under four
+              different descriptions, and nobody can see the actual inventory — not
+              buyers, not sellers, not the agents.
+            </p>
+            <p>
+              As an engineering problem, the interesting part is that there’s no join
+              key. No listing ID, no address standard, no shared taxonomy. You have to
+              infer that two records are the same house from attributes each agency
+              records differently, or doesn’t record at all.
+            </p>
+            <p>
+              So: nine scrapers, one per agency — Playwright for the JavaScript-rendered
+              sites, cheerio for the static ones — then a deduplication pass, then a
+              Next.js app on Supabase.
+            </p>
+            <p>
+              The dedup is Union-Find, and that choice is the thing I’d point at.
+              Duplication is transitive: if listing A matches B, and B matches C, but A
+              and C look different because one agency omitted the lot size — they’re
+              still one house. Pairwise matching gets that wrong. Connected components
+              get it right. The similarity function is deliberately explicit: bedrooms
+              are a hard match, a mismatch rejects immediately; price within 15%; areas
+              within 20%; and a pair needs at least two fields agreeing with zero
+              disagreeing. Each group keeps every source attached, so the product is
+              “this house, four agencies, four prices” — which is the thing that didn’t
+              exist before.
+            </p>
+            <p>
+              What I’d fix first: the tolerances are judgement, not learned, and there’s
+              no labelled ground truth, so I can’t tell you the matcher’s precision or
+              recall. I know how I’d get it — hand-label a few hundred cross-agency
+              pairs, then tune against that instead of against intuition — and until I
+              do, the honest answer is that I don’t have the number. The comparison is
+              also O(n²), which I left in deliberately with a comment saying why: at 500
+              listings it’s milliseconds, and blocking it before there’s a measured
+              accuracy problem would be optimising the wrong thing.
+            </p>
+          </div>
+
+          <div class="script">
+            <div class="script-head"><span>fractal-desk-v2</span><span class="dur">≈ 3 min</span></div>
+            <p>
+              Costa Rica changed its tax platform in October 2025 — TRIBU-CR replaced
+              ATV — and it enforces a rule with real money attached. Electronic
+              documents your business <em>receives</em> have to be answered within the
+              first eight business days of the month after they were issued. Miss that
+              window and the IVA credit is gone permanently. There’s no retroactive fix.
+            </p>
+            <p>
+              The thing that makes it a real engine rather than a date helper: the
+              deadline isn’t eight business days after the invoice. It’s a fixed
+              calendar point per issue-month. Everything issued in March — the 1st, the
+              15th, the 31st — shares one deadline, the 8th business day of April. So
+              the obvious implementation, add-eight-business-days, is wrong for every
+              single document it touches.
+            </p>
+            <p>
+              So the engine computes that per document over a Costa Rican business
+              calendar, and classifies each one into four states. The one I’d highlight:
+              if a document was confirmed <em>late</em>, the source system records it as
+              accepted, but the credit is gone. Reporting it as accepted would make the
+              dashboard’s headline number a lie. So the engine classifies outcome, not
+              activity — a late acceptance is EXPIRED_CREDIT_LOST, with a flag so you
+              can still query the distinction.
+            </p>
+            <p>
+              Structurally it’s a layered warehouse in DuckDB — staging, intermediate,
+              marts — and the deadline logic lives in Python with SQL consuming the
+              result as a fact table rather than re-deriving it. One implementation, one
+              place to defend. 224 tests.
+            </p>
+            <p>
+              Two things I’d say before being asked. All the data is synthetic and the
+              repo enforces that structurally — every taxpayer ID is in a range Costa
+              Rica doesn’t issue, every row carries an is_synthetic flag, and nothing in
+              it can sign or transmit a document. And there’s an earlier version,
+              Fractal Desk v1, that I sponsored as a university partnership — five
+              students at UNA built it and I owned requirements and delivery. I didn’t
+              write that code and none of it is in this repo. v2 is mine, and it’s
+              deliberately just the deadline engine rather than a rebuild of the whole
+              thing.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ══════════════════════════ Q&A ══════════════════════════ -->
+      <section id="questions">
+        <p class="eyebrow">Anticipated objections</p>
+        <h2 style="font-size:var(--step-2); margin:0.4rem 0 1.6rem; font-weight:600; letter-spacing:-0.015em;">Questions a skeptical reviewer will ask</h2>
+
+        <div class="qa">
+          <div>
+            <p class="q">Your eval’s baseline is 100% unsafe. Isn’t that rigged?</p>
+            <p>
+              Under the compliant mock profile, yes — by construction. It’s a worst-case
+              bound, not a prediction, and it’s labelled that way. That’s why the
+              cautious profile exists and is published alongside it: it reproduces the
+              documented asymmetry that models resist direct adversarial requests far
+              more than the same instruction arriving inside retrieved content, and it
+              gives 40%. Both are in the README. Also worth saying: the mock can’t see
+              which configuration it’s running under, and there’s a test asserting that
+              — otherwise the comparison would be circular.
+            </p>
+          </div>
+
+          <div>
+            <p class="q">So did the Spanish thing work or not?</p>
+            <p>
+              No, not as I framed it. One case out of 60. I’d rather report a hypothesis
+              that didn’t replicate than round it up. The result that <em>did</em>
+              replicate — mechanisms transfer across languages, pattern-matching doesn’t
+              — is more useful anyway, because it’s an architectural recommendation
+              rather than an observation about one language.
+            </p>
+          </div>
+
+          <div>
+            <p class="q">What’s the accuracy of your matcher?</p>
+            <p>
+              I don’t know, and that’s the honest answer. There’s no labelled ground
+              truth, so the tolerances are judgement. I know exactly how I’d get the
+              number — hand-label a few hundred cross-agency pairs and tune against them
+              — I just haven’t. What I did do is extract every threshold to a named
+              constant at the top of the file, so when the ground truth exists the
+              tuning surface is already there.
+            </p>
+          </div>
+
+          <div>
+            <p class="q">How do I know the tax rules in the deadline engine are right?</p>
+            <p>
+              You don’t take my word for it. The regulatory notes record which rule the
+              engine implements and why, with sources, dated, and they open by saying
+              this isn’t tax advice and that if it disagrees with the law, the law is
+              right. The engine also refuses to answer where it can’t — the business
+              calendar raises rather than returning a wrong date when the holiday data
+              doesn’t cover the range asked about.
+            </p>
+          </div>
+
+          <div>
+            <p class="q">Which of these is most like the work here?</p>
+            <p>
+              secure-agent-eval, directly — it’s an eval harness with an explicit
+              grading rubric, an audit trail, and results split by cohort.
+              fractal-desk-v2 is the same discipline applied to a compliance domain: a
+              rule with money attached, a status model that refuses to flatter the
+              numbers, and a test suite. nosara-listings is the product end — a real
+              pipeline with real ugly inputs that has to stay up.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <p class="foot">
+        Julian Monge · Nosara, Guanacaste, Costa Rica · every figure on this page was
+        read out of the repositories on 2026-08-07, not from memory.
+      </p>
+
+    </div>
+  </div>
+</div>
